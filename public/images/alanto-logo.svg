@@ -1,0 +1,18 @@
+<svg width="350" height="80" viewBox="0 0 350 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Flame icon -->
+  <path d="M40 15C30 30 45 38 37 55C50 45 55 30 40 15Z" fill="#F54A36"/>
+  <path d="M25 22C15 37 32 45 22 62C35 52 40 37 25 22Z" fill="#F76F5C"/>
+  
+  <!-- Alanto.ai text -->
+  <path d="M80 25L90 55H84L81.5 49H71.5L69 55H63L73 25H80ZM79.5 43L76 32L72.5 43H79.5Z" fill="currentColor"/>
+  <path d="M95 25H101V49H115V55H95V25Z" fill="currentColor"/>
+  <path d="M120 25H126V40C126 43 127 49 132 49C137 49 138 43 138 40V25H144V40C144 47 141 55 132 55C123 55 120 47 120 40V25Z" fill="currentColor"/>
+  <path d="M150 25H156V49H170V55H150V25Z" fill="currentColor"/>
+  <path d="M175 55V25H181V49H194V55H175Z" fill="currentColor"/>
+  <path d="M200 40C200 31 205 25 213 25C221 25 226 31 226 40C226 49 221 55 213 55C205 55 200 49 200 40ZM219 40C219 34 217 30.5 213 30.5C209 30.5 207 34 207 40C207 46 209 49.5 213 49.5C217 49.5 219 46 219 40Z" fill="currentColor"/>
+  <path d="M232 25H240C248 25 254 31 254 40C254 49 248 55 240 55H232V25ZM240 49.5C245 49.5 247 46 247 40C247 34 245 30.5 240 30.5H238V49.5H240Z" fill="currentColor"/>
+  <path d="M260 25H266V30H260V25ZM260 33H266V55H260V33Z" fill="currentColor"/>
+  
+  <!-- www.alantoai.com text -->
+  <text x="120" y="70" font-family="Arial" font-size="12" fill="currentColor">www.alantoai.com</text>
+</svg> 
