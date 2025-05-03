@@ -85,7 +85,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto card crt-overlay bg-white/70 p-6">
+    <div className="w-full max-w-xl mx-auto card crt-overlay bg-white/70 p-6 contact-form-container">
       <h3 className="text-2xl font-bold text-[var(--comic-brown)] text-glow-strong mb-6 text-center" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
         Register for Free AI Alter Ego
       </h3>
@@ -96,12 +96,12 @@ const ContactForm = () => {
             control={form.control}
             name="fullName"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="form-field">
                 <FormLabel className="text-[var(--comic-brown)] text-glow">Full Name</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="John Doe" 
-                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)]"
+                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)] mobile-input"
                     {...field} 
                   />
                 </FormControl>
@@ -114,12 +114,12 @@ const ContactForm = () => {
             control={form.control}
             name="companyEmail"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="form-field">
                 <FormLabel className="text-[var(--comic-brown)] text-glow">Company Email</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="john@company.com" 
-                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)]"
+                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)] mobile-input"
                     type="email"
                     {...field} 
                   />
@@ -133,12 +133,12 @@ const ContactForm = () => {
             control={form.control}
             name="linkedinUrl"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="form-field">
                 <FormLabel className="text-[var(--comic-brown)] text-glow">LinkedIn URL</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="https://linkedin.com/in/username" 
-                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)]"
+                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)] mobile-input"
                     type="url"
                     {...field} 
                   />
@@ -152,12 +152,12 @@ const ContactForm = () => {
             control={form.control}
             name="description"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="form-field">
                 <FormLabel className="text-[var(--comic-brown)] text-glow">Describe Yourself</FormLabel>
                 <FormControl>
                   <Textarea 
                     placeholder="Tell us about yourself and your company..." 
-                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)] min-h-24"
+                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)] min-h-24 mobile-textarea"
                     {...field} 
                   />
                 </FormControl>
@@ -170,12 +170,12 @@ const ContactForm = () => {
             control={form.control}
             name="phone"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="form-field">
                 <FormLabel className="text-[var(--comic-brown)] text-glow">Phone</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="+1 234 567 8900" 
-                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)]"
+                    className="bg-[var(--comic-cream)] border-[var(--comic-brown)]/50 text-[var(--comic-brown)] mobile-input"
                     type="tel"
                     {...field} 
                   />
@@ -188,7 +188,7 @@ const ContactForm = () => {
           <Button 
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-[var(--comic-orange)] hover:bg-[var(--comic-orange-2)] text-white font-bold py-2 shadow-[4px_4px_0_var(--comic-shadow)] border-2 border-[var(--comic-brown)]"
+            className="w-full bg-[var(--comic-orange)] hover:bg-[var(--comic-orange-2)] text-white font-bold py-2 shadow-[4px_4px_0_var(--comic-shadow)] border-2 border-[var(--comic-brown)] form-button"
           >
             {isSubmitting ? (
               <>

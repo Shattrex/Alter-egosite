@@ -172,24 +172,24 @@ const Index = () => {
           value={activeTab}
           onValueChange={setActiveTab}
         >
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-[var(--comic-orange)]/10 border border-[var(--comic-orange)]">
+          <TabsList className="grid w-full grid-cols-3 mb-8 bg-[var(--comic-orange)]/10 border border-[var(--comic-orange)] mobile-tabs-container">
             <TabsTrigger 
               value="slide1" 
               className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
             >
-              Create Your AI Shadow
+              <span className="mobile-tab-text">Create Your AI Shadow</span>
             </TabsTrigger>
             <TabsTrigger 
               value="slide2" 
               className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
             >
-              AI Alter Ego Caller
+              <span className="mobile-tab-text">AI Alter Ego Caller</span>
             </TabsTrigger>
             <TabsTrigger 
               value="slide3" 
               className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
             >
-              AI Alter Ego Seller
+              <span className="mobile-tab-text">AI Alter Ego Seller</span>
             </TabsTrigger>
           </TabsList>
           
@@ -452,13 +452,13 @@ const Index = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="text-center md:text-left">
-              <h4 className="text-xl mb-4 text-[var(--comic-brown)] text-glow-strong font-bold" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>CONNECT WITH US</h4>
-              <div className="flex flex-col md:flex-col space-y-3 justify-center md:justify-start">
+              <h4 className="text-xl mb-4 text-[var(--comic-brown)] text-glow-strong font-bold connect-with-us" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>CONNECT WITH US</h4>
+              <div className="flex flex-col md:flex-col space-y-3 justify-center md:justify-start social-links">
                 <a 
                   href="https://www.linkedin.com/company/alanto-ai/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-[var(--comic-brown)] hover:text-[var(--comic-orange)] transition-colors text-glow"
+                  className="inline-flex items-center text-[var(--comic-brown)] hover:text-[var(--comic-orange)] transition-colors text-glow social-link"
                 >
                   <Linkedin className="mr-2 h-5 w-5 text-[var(--comic-orange)]" />
                   <span>Alanto AI</span>
@@ -467,7 +467,7 @@ const Index = () => {
                   href="https://www.instagram.com/alantoai.productions/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-[var(--comic-brown)] hover:text-[var(--comic-orange)] transition-colors text-glow"
+                  className="inline-flex items-center text-[var(--comic-brown)] hover:text-[var(--comic-orange)] transition-colors text-glow social-link"
                 >
                   <Instagram className="mr-2 h-5 w-5 text-[var(--comic-orange)]" />
                   <span>@alantoai.productions</span>
@@ -476,13 +476,13 @@ const Index = () => {
             </div>
             
             <div className="text-center">
-              <h4 className="text-xl mb-4 text-[var(--comic-brown)] text-glow-strong font-bold" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>CONTACT</h4>
-              <div className="space-y-2">
-                <p className="flex items-center justify-center text-glow">
+              <h4 className="text-xl mb-4 text-[var(--comic-brown)] text-glow-strong font-bold contact-heading" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>CONTACT</h4>
+              <div className="space-y-2 contact-info">
+                <p className="flex items-center justify-center text-glow contact-item">
                   <Phone className="mr-2 h-5 w-5 text-[var(--comic-orange)]" />
                   <span>+44 7492 758066</span>
                 </p>
-                <p className="flex items-center justify-center text-glow">
+                <p className="flex items-center justify-center text-glow contact-item">
                   <Mail className="mr-2 h-5 w-5 text-[var(--comic-orange)]" />
                   <span>Info@alantoai.com</span>
                 </p>
@@ -490,14 +490,14 @@ const Index = () => {
             </div>
             
             <div className="text-center md:text-right">
-              <div className="text-lg text-[var(--comic-brown)] mb-4 text-glow">
+              <div className="text-lg text-[var(--comic-brown)] mb-4 text-glow tagline">
                 <p style={{ fontFamily: "'Bebas Neue', sans-serif" }}>DIGITALLY WEAPONIZING YOUR POTENTIAL SINCE 2024</p>
               </div>
             </div>
           </div>
           
           <div className="border-t border-[var(--comic-brown)]/30 pt-6 text-center">
-            <p className="text-sm text-[var(--comic-brown)] text-glow">© {new Date().getFullYear()} Alanto AI. All rights reserved.</p>
+            <p className="text-sm text-[var(--comic-brown)] text-glow copyright">© {new Date().getFullYear()} Alanto AI. All rights reserved.</p>
           </div>
         </div>
       </footer>

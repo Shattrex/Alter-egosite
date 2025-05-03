@@ -444,6 +444,78 @@
   body {
     padding-top: 60px;
   }
+
+  /* Improved tab button styles for mobile */
+  .TabsTrigger {
+    font-size: 0.8rem !important;
+    padding: 0.75rem 0.5rem !important;
+    height: auto !important;
+    min-height: 2.5rem !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .TabsList {
+    gap: 0.125rem !important;
+    padding: 0.25rem !important;
+  }
+
+  /* Improved footer for mobile */
+  footer h4 {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.75rem !important;
+    text-align: center !important;
+  }
+
+  footer .grid {
+    gap: 1.5rem !important;
+  }
+
+  footer a, 
+  footer p {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  /* Fix for social media icons in footer */
+  footer .space-y-3 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* Contact section heading */
+  footer h4.text-xl {
+    text-align: center !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Fix for "digitally weaponizing" text */
+  footer .text-lg {
+    font-size: 1rem !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    max-width: 90% !important;
+  }
+
+  /* Register Now button for better tap target */
+  .form-button,
+  button[type="submit"] {
+    padding: 0.75rem 1rem !important;
+    min-height: 3rem !important;
+    font-size: 1rem !important;
+    border-radius: 0.5rem !important;
+    width: 100% !important;
+  }
 }
 
 /* Fix for tab selection on mobile */
@@ -494,5 +566,54 @@
   
   header nav a {
     font-size: 0.875rem !important;
+  }
+}
+
+/* Mobile tabs styling */
+.mobile-tabs-container {
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .mobile-tab-text {
+    font-size: 0.75rem;
+    display: block;
+    line-height: 1.2;
+    text-align: center;
+    word-break: normal;
+    white-space: normal;
+  }
+}
+
+/* Fix input fields on mobile */
+@media (max-width: 768px) {
+  input[type="text"], 
+  input[type="email"], 
+  input[type="tel"], 
+  textarea {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+    padding: 0.75rem !important;
+    min-height: 44px;
+    border-radius: 0.5rem !important;
+  }
+  
+  .contact-form-container {
+    padding: 1rem !important;
+  }
+  
+  /* Make form fields take full width on mobile */
+  .form-field {
+    width: 100% !important;
+  }
+
+  /* Better spacing for footer headlines */
+  footer h4.connect-with-us,
+  footer h4.contact-heading {
+    font-size: 1.25rem !important;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
   }
 }
