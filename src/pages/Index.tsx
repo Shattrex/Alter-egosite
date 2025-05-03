@@ -199,7 +199,7 @@ const Index = () => {
                 <div className="rounded-lg overflow-hidden card" style={{ backgroundColor: "var(--comic-cream)" }}>
                   <div className="aspect-9-15">
                     <VideoEmbed 
-                      src="https://drive.google.com/file/d/1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu/preview?usp=sharing" 
+                      src="https://drive.google.com/file/d/1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu/view" 
                       title="Create Your AI Shadow"
                       className="rounded-lg overflow-hidden vertical"
                       vertical={true}
