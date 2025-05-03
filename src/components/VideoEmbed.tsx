@@ -20,9 +20,23 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
   const [hasError, setHasError] = useState(false);
   const [fallbackMode, setFallbackMode] = useState(false);
   const [directPlayMode, setDirectPlayMode] = useState(false);
+  const [productionMode, setProductionMode] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [retryCount, setRetryCount] = useState(0);
+
+  // Check if we're in production (Vercel) or development
+  useEffect(() => {
+    // Check if we're running on Vercel or another production environment
+    const isProduction = window.location.hostname.includes('vercel.app') || 
+                        !window.location.hostname.includes('localhost');
+    
+    if (isProduction) {
+      setProductionMode(true);
+      // In production, immediately use the most reliable method
+      setDirectPlayMode(true);
+    }
+  }, []);
 
   // Extract video ID from Google Drive URL
   const getVideoId = (url: string) => {
@@ -53,6 +67,22 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
       loading="eager"
       style="border: none; border-radius: 8px; display: block; width: 100%; height: 100%; min-height: 350px; position: absolute; top: 0; left: 0;"
     ></iframe>
+  `;
+
+  // More compatible embed HTML specifically for production environments
+  const productionEmbedHtml = `
+    <div style="position: relative; padding-bottom: ${vertical ? '177.78%' : '56.25%'}; height: 0; overflow: hidden; border-radius: 8px;">
+      <iframe 
+        src="https://drive.google.com/file/d/${videoId}/preview" 
+        width="100%" 
+        height="100%" 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen="true"
+        loading="eager"
+        frameborder="0"
+      ></iframe>
+    </div>
   `;
 
   // Even more direct HTML5 player fallback for mobile
@@ -101,13 +131,21 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
     }
   };
 
+  // Try the production optimized method
+  const tryProductionMode = () => {
+    setProductionMode(true);
+    if (containerRef.current) {
+      containerRef.current.innerHTML = productionEmbedHtml;
+    }
+  };
+
   // Set up iframe dimensions and event listeners
   useEffect(() => {
     const iframe = iframeRef.current;
     
     // Automatically use fallback mode on mobile devices
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile && !fallbackMode) {
+    if (isMobile && !fallbackMode && !directPlayMode && !productionMode) {
       // Start with the reliable method on mobile
       setFallbackMode(true);
     }
@@ -147,14 +185,14 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
     setTimeout(handleResize, 100);
 
     // Set initial source for iframe
-    if (iframe && !isLoaded && !hasError && !fallbackMode) {
+    if (iframe && !isLoaded && !hasError && !fallbackMode && !directPlayMode && !productionMode) {
       iframe.src = embedUrl;
     }
 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [vertical, embedUrl, fallbackMode]);
+  }, [vertical, embedUrl, fallbackMode, directPlayMode, productionMode]);
 
   // Fallback to direct embed if needed
   useEffect(() => {
@@ -169,6 +207,13 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
       containerRef.current.innerHTML = html5PlayerHtml;
     }
   }, [directPlayMode, html5PlayerHtml]);
+
+  // Handle production mode
+  useEffect(() => {
+    if (productionMode && containerRef.current) {
+      containerRef.current.innerHTML = productionEmbedHtml;
+    }
+  }, [productionMode, productionEmbedHtml]);
 
   // Container styles
   const containerStyle: React.CSSProperties = {
@@ -197,8 +242,8 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
   // Fallback link to original video
   const fallbackLink = `https://drive.google.com/file/d/${videoId}/view?usp=sharing`;
 
-  // If in fallback mode or direct play mode, render a div for HTML injection
-  if (fallbackMode || directPlayMode) {
+  // If in any special mode, render a div for HTML injection
+  if (fallbackMode || directPlayMode || productionMode) {
     return (
       <div 
         ref={containerRef}
@@ -214,7 +259,7 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
       className={cn("video-container rounded-lg", className)} 
       style={containerStyle}
     >
-      {!isLoaded && !fallbackMode && (
+      {!isLoaded && !fallbackMode && !directPlayMode && !productionMode && (
         <div className="absolute inset-0 flex items-center justify-center bg-[var(--comic-cream)]">
           <div className="animate-pulse flex flex-col items-center">
             <div className="w-12 h-12 border-4 border-[var(--comic-orange)] border-t-transparent rounded-full animate-spin"></div>
@@ -222,7 +267,7 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
           </div>
         </div>
       )}
-      {hasError && retryCount >= 2 && !fallbackMode && (
+      {hasError && retryCount >= 2 && !fallbackMode && !directPlayMode && !productionMode && (
         <div className="absolute inset-0 flex items-center justify-center bg-[var(--comic-cream)]">
           <div className="flex flex-col items-center">
             <p className="text-[var(--comic-orange)]">Failed to load video</p>
@@ -239,6 +284,12 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
               >
                 Mobile Version
               </button>
+              <button 
+                onClick={tryProductionMode}
+                className="px-4 py-2 bg-[var(--comic-orange)] text-white rounded-md hover:bg-[var(--comic-orange-2)] transition-colors"
+              >
+                Production Fix
+              </button>
               <a 
                 href={fallbackLink}
                 target="_blank"
@@ -251,7 +302,7 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
           </div>
         </div>
       )}
-      {!fallbackMode && !directPlayMode && (
+      {!fallbackMode && !directPlayMode && !productionMode && (
         <iframe
           ref={iframeRef}
           src={embedUrl}
