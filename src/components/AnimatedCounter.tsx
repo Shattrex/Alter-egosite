@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react";
 
 interface AnimatedCounterProps {
@@ -19,7 +18,11 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
+  // Reset counter when key changes
   useEffect(() => {
+    setCount(0);
+    setIsVisible(false);
+    
     observerRef.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         setIsVisible(true);
@@ -58,7 +61,7 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
   }, [end, duration, isVisible]);
 
   return (
-    <span ref={countRef} className="font-bold text-4xl text-electric-magenta">
+    <span ref={countRef} className="font-bold text-4xl text-[var(--comic-orange)]">
       {prefix}{count}{suffix}
     </span>
   );

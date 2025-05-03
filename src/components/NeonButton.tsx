@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -17,9 +16,7 @@ const NeonButton: React.FC<NeonButtonProps> = ({
     <Button
       className={cn(
         "relative font-bold border-2 transition-all duration-300 hover:scale-105",
-        primary 
-          ? "bg-red-600 border-red-600 hover:bg-red-600/80 shadow-[0_0_15px_rgba(255,0,0,0.7)] text-yellow-300" 
-          : "bg-yellow-300 border-yellow-300 hover:bg-yellow-300/80 shadow-[0_0_15px_rgba(255,215,0,0.7)] text-red-600",
+        "bg-[var(--comic-orange)] border-[var(--comic-brown)] hover:bg-[var(--comic-orange-2)] shadow-[4px_4px_0_var(--comic-shadow)] text-white",
         className
       )}
       {...props}

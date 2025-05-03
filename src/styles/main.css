@@ -1,0 +1,250 @@
+/* === Alanto AI Vintage Comic Palette ======================== */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+:root {
+  --comic-cream:     #F7EBD2; /* page background */
+  --comic-cream-light: #FFFCF5; /* even lighter cream for header/footer */
+  --comic-brown:     #3B2A1C; /* headlines + text */
+  --comic-orange:    #E07A21; /* buttons, accents */
+  --comic-orange-2:  #FFB25C; /* hover tint */
+  --comic-shadow:    rgba(0,0,0,.18); /* halftone feel */
+}
+
+/* Reset / base colours */
+body {
+  background: var(--comic-cream);
+  color: var(--comic-brown);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header and Footer styling */
+.header-cream, .footer-cream {
+  background-color: var(--comic-cream-light);
+  border-color: var(--comic-brown);
+}
+
+/* Headline style */
+h1, h2, .hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--comic-brown);
+  letter-spacing: .5px;
+  text-shadow: 2px 2px 0 var(--comic-shadow);
+}
+
+/* Primary CTA button */
+.button-primary {
+  background: var(--comic-orange);
+  color: #fff;
+  border: none;
+  padding: .9rem 1.6rem;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: background .15s ease-in-out;
+}
+.button-primary:hover {
+  background: var(--comic-orange-2);
+}
+
+/* Links */
+a {
+  color: var(--comic-orange);
+}
+a:hover {
+  color: var(--comic-brown);
+}
+
+/* Decorative blobs & bullets */
+.blob,
+.decor-circle {
+  background: var(--comic-orange-2);
+}
+
+/* Optional comic border for cards / hero blocks */
+.card, .hero-block {
+  border: 3px solid var(--comic-brown);
+  box-shadow: 4px 4px 0 var(--comic-shadow);
+  border-radius: 6px;
+}
+
+/* Ensure logo stays crisp on new cream bg */
+#site-logo {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+/* Progress bar animation - optimized for smoothness */
+@keyframes progressBar {
+  0% { width: 0; opacity: 0.7; }
+  10% { opacity: 1; }
+  100% { width: var(--progress-width); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  0% { transform: translateX(-15px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.animate-progress-bar {
+  animation: progressBar 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  width: 0;
+  will-change: width, opacity;
+  transform: translateZ(0);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease-out forwards;
+  opacity: 0;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.progress-bar-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.progress-bar-delay-2 {
+  animation-delay: 0.3s;
+}
+
+.progress-bar-delay-3 {
+  animation-delay: 0.5s;
+}
+
+/* Function matrix styles */
+.function-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.function-item {
+  background: white;
+  border: 2px solid var(--comic-brown);
+  box-shadow: 3px 3px 0 var(--comic-shadow);
+  border-radius: 8px;
+  padding: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.function-item:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 4px 6px 0 var(--comic-shadow);
+}
+
+.function-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--comic-orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease-out;
+}
+
+.function-item:hover::before {
+  transform: scaleX(1);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.function-icon {
+  background: var(--comic-orange-2);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  transition: background 0.3s ease;
+}
+
+.function-item:hover .function-icon {
+  background: var(--comic-orange);
+  animation: pulse 1s infinite;
+}
+
+/* Shimmer loading effect */
+.loading-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.loading-shimmer::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.5s infinite;
+  content: '';
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Video container with 9:15 aspect ratio */
+.aspect-9-15 {
+  aspect-ratio: 9/15;
+  max-height: 700px;
+  margin: 0 auto;
+  width: auto;
+}
+
+/* Ensure videos maintain aspect ratio */
+.video-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-container iframe {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+}
+
+/* Optimize video container for vertical content */
+.video-container.vertical {
+  max-width: 500px;
+  margin: 0 auto;
+} 

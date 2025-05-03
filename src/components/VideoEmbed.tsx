@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -7,9 +6,16 @@ interface VideoEmbedProps {
   title: string;
   className?: string;
   vertical?: boolean;
+  aspectRatio?: string;
 }
 
-const VideoEmbed: React.FC<VideoEmbedProps> = ({ src, title, className, vertical = true }) => {
+const VideoEmbed: React.FC<VideoEmbedProps> = ({ 
+  src, 
+  title, 
+  className, 
+  vertical = true,
+  aspectRatio
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -32,13 +38,32 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({ src, title, className, vertical
     }
   }, []);
 
+  // Calculate container style based on aspect ratio
+  const containerStyle: React.CSSProperties = {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden'
+  };
+
+  // Calculate iframe style with the specified aspect ratio
+  const iframeStyle: React.CSSProperties = {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+    aspectRatio: aspectRatio || (vertical ? "9/16" : "16/9")
+  };
+
   return (
-    <div className={cn("video-container rounded-lg overflow-hidden", className)}>
+    <div className={cn("video-container rounded-lg", className)} style={containerStyle}>
       {!isLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black">
+        <div className="absolute inset-0 flex items-center justify-center bg-[var(--comic-cream)]">
           <div className="animate-pulse flex flex-col items-center">
-            <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
-            <p className="mt-4 text-red-600">Loading video...</p>
+            <div className="w-12 h-12 border-4 border-[var(--comic-orange)] border-t-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 text-[var(--comic-orange)]">Loading video...</p>
           </div>
         </div>
       )}
@@ -48,7 +73,7 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({ src, title, className, vertical
         title={title}
         allow="autoplay"
         className={cn("w-full h-full", isLoaded ? "opacity-100" : "opacity-0")}
-        style={{ aspectRatio: vertical ? "9/16" : "16/9" }}
+        style={iframeStyle}
       ></iframe>
     </div>
   );
