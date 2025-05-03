@@ -198,13 +198,16 @@ const Index = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
                 <div className="rounded-lg overflow-hidden card" style={{ backgroundColor: "var(--comic-cream)" }}>
                   <div className="aspect-9-15">
-                    <VideoEmbed 
-                      src="https://drive.google.com/file/d/1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu/view" 
-                      title="Content Agent V1"
-                      className="rounded-lg overflow-hidden vertical"
-                      vertical={true}
-                      aspectRatio="9/16"
-                    />
+                    <div className="relative w-full h-0" style={{ paddingBottom: '177.78%' }}>
+                      <iframe 
+                        src="https://www.youtube.com/embed/K3Von2G6ayQ" 
+                        title="Content Agent V1"
+                        className="absolute top-0 left-0 w-full h-full rounded-lg"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
                   </div>
                 </div>
                 
