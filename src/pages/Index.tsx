@@ -177,19 +177,19 @@ const Index = () => {
               value="slide1" 
               className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
             >
-              <span className="mobile-tab-text">Create Your AI Shadow</span>
+              <span className="mobile-tab-text">Content Agent V1</span>
             </TabsTrigger>
             <TabsTrigger 
               value="slide2" 
               className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
             >
-              <span className="mobile-tab-text">AI Alter Ego Caller</span>
+              <span className="mobile-tab-text">Calling Agent V3</span>
             </TabsTrigger>
             <TabsTrigger 
               value="slide3" 
               className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
             >
-              <span className="mobile-tab-text">AI Alter Ego Seller</span>
+              <span className="mobile-tab-text">Sales Agent V3</span>
             </TabsTrigger>
           </TabsList>
           
@@ -200,7 +200,7 @@ const Index = () => {
                   <div className="aspect-9-15">
                     <VideoEmbed 
                       src="https://drive.google.com/file/d/1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu/view" 
-                      title="Create Your AI Shadow"
+                      title="Content Agent V1"
                       className="rounded-lg overflow-hidden vertical"
                       vertical={true}
                       aspectRatio="9/16"
@@ -210,7 +210,7 @@ const Index = () => {
                 
                 <div className="flex flex-col justify-start px-6">
                   <h3 className="text-2xl md:text-3xl mb-4 font-bold text-[var(--comic-brown)] text-glow-strong" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                    Create Your AI Shadow
+                    Content Agent V1
                   </h3>
                   <p className="text-lg mb-4 text-[var(--comic-brown)] text-glow">
                     Clone voice, persona, and expertise in 24hrs
@@ -255,7 +255,7 @@ const Index = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
                 <div className="bg-[var(--comic-cream)]/50 border border-[var(--comic-brown)] shadow-[4px_4px_0_var(--comic-shadow)] rounded-lg p-6">
                   <h3 className="text-2xl md:text-3xl mb-6 font-bold text-[var(--comic-brown)] text-glow-strong" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                    AI Alter Ego Caller
+                    Calling Agent V3
                   </h3>
                   <div className="flex flex-col items-center justify-center space-y-6">
                     <div className="relative w-full max-w-xs">
@@ -328,7 +328,7 @@ const Index = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
                 <div className="bg-[var(--comic-cream)]/50 border border-[var(--comic-brown)] shadow-[4px_4px_0_var(--comic-shadow)] rounded-lg p-6">
                   <h3 className="text-2xl md:text-3xl mb-6 font-bold text-[var(--comic-brown)] text-glow-strong" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                    AI Alter Ego Seller
+                    Sales Agent V3
                   </h3>
                   <div className="flex flex-col items-center justify-center space-y-6">
                     <div className="relative w-full max-w-xs">
