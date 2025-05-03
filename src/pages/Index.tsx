@@ -21,6 +21,7 @@ import {
   FileText, 
   Mic, 
   Globe,
+  Instagram,
   LucideIcon
 } from "lucide-react";
 
@@ -106,7 +107,7 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex flex-col items-center justify-center px-4 py-16 pt-24">
+      <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-4 py-16 pt-36">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-circuit-board opacity-20"></div>
           <div className="absolute inset-0 bg-gradient-radial from-transparent to-[var(--comic-cream)]"></div>
@@ -160,7 +161,7 @@ const Index = () => {
       </section>
       
       {/* Product Showcase Slides */}
-      <section className="py-16 px-4 max-w-6xl mx-auto">
+      <section id="your-ai-future" className="py-16 px-4 max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl text-center mb-10 text-[var(--comic-brown)] text-glow-strong" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
           <span>Your AI Future</span> Is Here
         </h2>
@@ -171,10 +172,25 @@ const Index = () => {
           value={activeTab}
           onValueChange={setActiveTab}
         >
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-[var(--comic-cream)]/30 border border-[var(--comic-orange)]/30">
-            <TabsTrigger value="slide1" className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)]/20 text-glow">Create Your AI Shadow</TabsTrigger>
-            <TabsTrigger value="slide2" className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)]/20 text-glow">AI Alter Ego Caller</TabsTrigger>
-            <TabsTrigger value="slide3" className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)]/20 text-glow">AI Alter Ego Seller</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 mb-8 bg-[var(--comic-orange)]/10 border border-[var(--comic-orange)]">
+            <TabsTrigger 
+              value="slide1" 
+              className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
+            >
+              Create Your AI Shadow
+            </TabsTrigger>
+            <TabsTrigger 
+              value="slide2" 
+              className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
+            >
+              AI Alter Ego Caller
+            </TabsTrigger>
+            <TabsTrigger 
+              value="slide3" 
+              className="text-[var(--comic-brown)] data-[state=active]:bg-[var(--comic-orange)] data-[state=active]:text-white font-medium py-2 hover:bg-[var(--comic-orange)]/80 hover:text-white/90 transition-colors"
+            >
+              AI Alter Ego Seller
+            </TabsTrigger>
           </TabsList>
           
           <div className="crt-overlay card p-1">
@@ -183,11 +199,11 @@ const Index = () => {
                 <div className="rounded-lg overflow-hidden card" style={{ backgroundColor: "var(--comic-cream)" }}>
                   <div className="aspect-9-15">
                     <VideoEmbed 
-                      src="https://drive.google.com/file/d/1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu/view" 
+                      src="https://drive.google.com/file/d/1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu/preview?usp=sharing" 
                       title="Create Your AI Shadow"
                       className="rounded-lg overflow-hidden vertical"
                       vertical={true}
-                      aspectRatio="9/15"
+                      aspectRatio="9/16"
                     />
                   </div>
                 </div>
@@ -437,7 +453,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="text-center md:text-left">
               <h4 className="text-xl mb-4 text-[var(--comic-brown)] text-glow-strong font-bold" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>CONNECT WITH US</h4>
-              <div className="flex justify-center md:justify-start">
+              <div className="flex flex-col md:flex-col space-y-3 justify-center md:justify-start">
                 <a 
                   href="https://www.linkedin.com/company/alanto-ai/" 
                   target="_blank" 
@@ -446,6 +462,15 @@ const Index = () => {
                 >
                   <Linkedin className="mr-2 h-5 w-5 text-[var(--comic-orange)]" />
                   <span>Alanto AI</span>
+                </a>
+                <a 
+                  href="https://www.instagram.com/alantoai.productions/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-[var(--comic-brown)] hover:text-[var(--comic-orange)] transition-colors text-glow"
+                >
+                  <Instagram className="mr-2 h-5 w-5 text-[var(--comic-orange)]" />
+                  <span>@alantoai.productions</span>
                 </a>
               </div>
             </div>

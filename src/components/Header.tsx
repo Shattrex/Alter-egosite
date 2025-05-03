@@ -1,6 +1,4 @@
 import React from "react";
-import NeonButton from "./NeonButton";
-import { Zap, Phone, Bot, Calendar } from "lucide-react";
 
 const Header = () => {
   const scrollToSection = (sectionId: string) => (e: React.MouseEvent) => {
@@ -9,55 +7,39 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 header-cream shadow-[0_2px_0_var(--comic-shadow)]" style={{ backgroundColor: "var(--comic-cream-light)" }}>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#FDF6E9] shadow-md">
       <div className="container mx-auto px-4 py-3">
-        {/* Main navigation row */}
-        <div className="flex justify-end items-center">
-          <nav className="hidden md:flex items-center space-x-4">
+        <div className="flex justify-between items-center">
+          <a href="/" className="flex items-center">
+            <img 
+              src="/assets/alanto-logo.png" 
+              alt="Alanto AI" 
+              className="h-16 w-auto"
+            />
+          </a>
+          <nav className="flex items-center space-x-6">
             <a 
-              href="#ai-shadow" 
-              onClick={scrollToSection('slide1')}
-              className="text-[var(--comic-brown)] hover:text-[var(--comic-orange)] font-bold transition-colors"
+              href="#your-ai-future" 
+              onClick={scrollToSection('your-ai-future')}
+              className="text-[var(--comic-brown)] hover:text-[var(--comic-orange)] font-medium transition-colors"
             >
-              AI Shadow
+              About
             </a>
             <a 
-              href="#ai-caller" 
-              onClick={scrollToSection('slide2')}
-              className="text-[var(--comic-brown)] hover:text-[var(--comic-orange)] font-bold transition-colors"
+              href="#contact-form-section" 
+              onClick={scrollToSection('contact-form-section')}
+              className="text-[var(--comic-brown)] hover:text-[var(--comic-orange)] font-medium transition-colors"
             >
-              AI Caller
+              Demo
             </a>
             <a 
-              href="#ai-seller" 
-              onClick={scrollToSection('slide3')}
-              className="text-[var(--comic-brown)] hover:text-[var(--comic-orange)] font-bold transition-colors"
+              href="#contact-form-section" 
+              onClick={scrollToSection('contact-form-section')}
+              className="text-[var(--comic-brown)] hover:text-[var(--comic-orange)] font-medium transition-colors"
             >
-              AI Seller
-            </a>
-            <a
-              href="#get-free-alter-ego"
-              onClick={scrollToSection('get-free-alter-ego')}
-              className="text-[var(--comic-brown)] hover:text-[var(--comic-orange)] font-bold transition-colors"
-            >
-              Pricing
-            </a>
-            <a href="#contact-form-section" onClick={scrollToSection('contact-form-section')}>
-              <NeonButton size="sm">
-                <span className="flex items-center">
-                  <Zap className="mr-1 h-4 w-4" />
-                  Get Started
-                </span>
-              </NeonButton>
+              Contact
             </a>
           </nav>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <a href="#contact-form-section" onClick={scrollToSection('contact-form-section')}>
-              <NeonButton size="sm">Get Started</NeonButton>
-            </a>
-          </div>
         </div>
       </div>
     </header>
