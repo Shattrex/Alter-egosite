@@ -19,6 +19,7 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [fallbackMode, setFallbackMode] = useState(false);
+  const [directPlayMode, setDirectPlayMode] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [retryCount, setRetryCount] = useState(0);
@@ -37,19 +38,34 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
 
   const videoId = getVideoId(src);
   
-  // Fixed embed URL that works specifically for Google Drive
-  const embedUrl = "https://drive.google.com/file/d/1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu/preview";
+  // Improved embed URL with forced mobile compatibility
+  const embedUrl = `https://drive.google.com/file/d/${videoId}/preview`;
   
-  // Direct embed HTML that works more reliably
+  // Direct embed HTML that works more reliably, including on mobile devices
   const directEmbedHtml = `
     <iframe 
       src="${embedUrl}" 
       width="100%" 
       height="100%" 
-      allow="autoplay; fullscreen" 
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
       allowfullscreen
-      style="border: none; border-radius: 8px; display: block; width: 100%; height: 100%; min-height: 350px;"
+      loading="eager"
+      style="border: none; border-radius: 8px; display: block; width: 100%; height: 100%; min-height: 350px; position: absolute; top: 0; left: 0;"
     ></iframe>
+  `;
+
+  // Even more direct HTML5 player fallback for mobile
+  const html5PlayerHtml = `
+    <div style="position: relative; padding-bottom: ${vertical ? '177.78%' : '56.25%'}; height: 0; overflow: hidden; width: 100%; border-radius: 8px;">
+      <iframe 
+        src="${embedUrl}"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px;"
+        allowfullscreen 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        loading="eager"
+      ></iframe>
+    </div>
   `;
 
   // Force reload function with incremental backoff
@@ -59,27 +75,43 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
       setHasError(false);
       setRetryCount(prev => prev + 1);
       
-      // Try using the fallback approach after 2 retries
-      if (retryCount >= 2) {
+      // Try using the fallback approach after 1 retry
+      if (retryCount >= 1) {
         setFallbackMode(true);
         return;
       }
       
       // Add a timestamp to force reload
       iframeRef.current.src = '';
-      const delay = Math.min(50 * Math.pow(2, retryCount), 2000);
+      const delay = Math.min(50 * Math.pow(2, retryCount), 1000);
       
       setTimeout(() => {
         if (iframeRef.current) {
-          iframeRef.current.src = embedUrl;
+          iframeRef.current.src = `${embedUrl}?${new Date().getTime()}`;
         }
       }, delay);
+    }
+  };
+
+  // Try the more direct play method
+  const tryDirectPlay = () => {
+    setDirectPlayMode(true);
+    if (containerRef.current) {
+      containerRef.current.innerHTML = html5PlayerHtml;
     }
   };
 
   // Set up iframe dimensions and event listeners
   useEffect(() => {
     const iframe = iframeRef.current;
+    
+    // Automatically use fallback mode on mobile devices
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile && !fallbackMode) {
+      // Start with the reliable method on mobile
+      setFallbackMode(true);
+    }
+
     if (iframe) {
       iframe.onload = () => {
         setIsLoaded(true);
@@ -98,6 +130,8 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
       if (containerRef.current) {
         const container = containerRef.current;
         const containerWidth = container.clientWidth;
+        
+        // Calculate height based on aspect ratio
         const height = vertical 
           ? containerWidth * (16/9) 
           : containerWidth * (9/16);
@@ -113,14 +147,14 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
     setTimeout(handleResize, 100);
 
     // Set initial source for iframe
-    if (iframe && !isLoaded && !hasError) {
+    if (iframe && !isLoaded && !hasError && !fallbackMode) {
       iframe.src = embedUrl;
     }
 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [vertical, embedUrl]);
+  }, [vertical, embedUrl, fallbackMode]);
 
   // Fallback to direct embed if needed
   useEffect(() => {
@@ -129,19 +163,26 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
     }
   }, [fallbackMode, directEmbedHtml]);
 
+  // Handle direct play mode
+  useEffect(() => {
+    if (directPlayMode && containerRef.current) {
+      containerRef.current.innerHTML = html5PlayerHtml;
+    }
+  }, [directPlayMode, html5PlayerHtml]);
+
   // Container styles
   const containerStyle: React.CSSProperties = {
     position: 'relative',
     width: '100%',
     height: 'auto',
-    minHeight: '350px',
+    minHeight: vertical ? '400px' : '350px',
     overflow: 'hidden',
     backgroundColor: 'var(--comic-cream-light)',
     borderRadius: '8px',
     boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
   };
 
-  // iframe styles
+  // iframe styles with proper aspect ratios
   const iframeStyle: React.CSSProperties = {
     border: 'none',
     borderRadius: '8px',
@@ -149,15 +190,15 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
     aspectRatio: aspectRatio || (vertical ? "9/16" : "16/9"),
     display: 'block',
     width: '100%',
-    minHeight: '350px',
+    minHeight: vertical ? '400px' : '350px',
     background: 'white'
   };
 
   // Fallback link to original video
   const fallbackLink = `https://drive.google.com/file/d/${videoId}/view?usp=sharing`;
 
-  // If in fallback mode, render a div for direct HTML injection
-  if (fallbackMode) {
+  // If in fallback mode or direct play mode, render a div for HTML injection
+  if (fallbackMode || directPlayMode) {
     return (
       <div 
         ref={containerRef}
@@ -181,7 +222,7 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
           </div>
         </div>
       )}
-      {hasError && retryCount >= 3 && !fallbackMode && (
+      {hasError && retryCount >= 2 && !fallbackMode && (
         <div className="absolute inset-0 flex items-center justify-center bg-[var(--comic-cream)]">
           <div className="flex flex-col items-center">
             <p className="text-[var(--comic-orange)]">Failed to load video</p>
@@ -191,6 +232,12 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
                 className="px-4 py-2 bg-[var(--comic-orange)] text-white rounded-md hover:bg-[var(--comic-orange-2)] transition-colors"
               >
                 Try Alternative View
+              </button>
+              <button 
+                onClick={tryDirectPlay}
+                className="px-4 py-2 bg-[var(--comic-orange)] text-white rounded-md hover:bg-[var(--comic-orange-2)] transition-colors"
+              >
+                Mobile Version
               </button>
               <a 
                 href={fallbackLink}
@@ -204,13 +251,14 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
           </div>
         </div>
       )}
-      {!fallbackMode && (
+      {!fallbackMode && !directPlayMode && (
         <iframe
           ref={iframeRef}
           src={embedUrl}
           title={title}
-          allow="autoplay; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
+          frameBorder="0"
           className={cn("w-full", isLoaded ? "opacity-100" : "opacity-0")}
           style={iframeStyle}
           loading="eager"
