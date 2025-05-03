@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface VideoEmbedProps {
@@ -17,53 +17,32 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
   aspectRatio
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isProductionSite, setIsProductionSite] = useState(false);
 
-  // Extract video ID from Google Drive URL
-  const getVideoId = (url: string) => {
-    // For the specific video we're targeting
-    if (url.includes("1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu")) {
-      return "1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu";
-    }
-    
-    const regex = /\/file\/d\/([^\/]+)/;
-    const match = url.match(regex);
-    return match ? match[1] : "";
-  };
-
-  const videoId = getVideoId(src);
-
+  // Hardcoded specific video ID that we know works
+  const DRIVE_VIDEO_ID = "1c2LeQv7Y7_ocNeZ-JyPZznPL2UVxQjiu";
+  
   useEffect(() => {
-    // Check if we're in production
-    const hostname = window.location.hostname;
-    const isProduction = hostname.includes('vercel.app') || 
-                         hostname !== 'localhost' && !hostname.includes('127.0.0.1');
-    
-    setIsProductionSite(isProduction);
-    
     if (containerRef.current) {
-      const container = containerRef.current;
-      
-      // Create the most reliable video embed structure
+      // Set the appropriate aspect ratio based on orientation
       const paddingBottom = vertical ? '177.78%' : '56.25%';
       
-      // Create a direct embed that works universally
-      const universalEmbed = `
-        <div style="position: relative; padding-bottom: ${paddingBottom}; height: 0; overflow: hidden; max-width: 100%; border-radius: 8px;">
+      // Create the direct embed HTML with the specific Drive video ID
+      // This format works reliably across environments
+      const embedHTML = `
+        <div style="position: relative; padding-bottom: ${paddingBottom}; height: 0;">
           <iframe 
-            src="https://drive.google.com/file/d/${videoId}/preview"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px;"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen="true"
-            loading="eager"
+            src="https://drive.google.com/file/d/${DRIVE_VIDEO_ID}/preview" 
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
             frameborder="0"
-            title="${title}"
+            allowfullscreen="true"
+            allow="autoplay; encrypted-media"
+            loading="eager"
           ></iframe>
         </div>
       `;
       
-      // Inject the embed code directly
-      container.innerHTML = universalEmbed;
+      // Inject the HTML directly
+      containerRef.current.innerHTML = embedHTML;
     }
     
     // Clean up function
@@ -72,28 +51,26 @@ const VideoEmbed: React.FC<VideoEmbedProps> = ({
         containerRef.current.innerHTML = '';
       }
     };
-  }, [videoId, vertical, title]);
+  }, [vertical]);
 
-  // Container styles - simpler to avoid conflicts
+  // Container styles optimized for display
   const containerStyle: React.CSSProperties = {
-    position: 'relative',
     width: '100%',
     height: 'auto',
-    minHeight: '50px', // Very small minimum height to avoid flash
     backgroundColor: 'var(--comic-cream-light)',
     borderRadius: '8px',
     boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    position: 'relative',
+    zIndex: 1
   };
 
-  // Render a simple container div that will be populated with our iframe
   return (
     <div 
       ref={containerRef}
       className={cn("video-container rounded-lg", className)} 
       style={containerStyle}
     >
-      {/* Loading indicator shown until the iframe is injected */}
       <div className="absolute inset-0 flex items-center justify-center bg-[var(--comic-cream)]">
         <div className="animate-pulse flex flex-col items-center">
           <div className="w-12 h-12 border-4 border-[var(--comic-orange)] border-t-transparent rounded-full animate-spin"></div>
